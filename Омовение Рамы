@@ -1,0 +1,31 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
+/*
+JavaRush. Java Syntax. Уровень 8. Лекция 11. (0823)
+Омовение Рамы.
+Написать программу, которая вводит с клавиатуры строку текста.
+Программа заменяет в тексте первые буквы всех слов на заглавные.
+Вывести результат на экран.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String string = reader.readLine();
+        String newString = "";
+        //напишите тут ваш код
+        int len = string.length();
+        char[] charArrayFromString = new char[len];
+        for (int i = 0; i < len; i++) {
+            charArrayFromString[i] = string.charAt(i);
+            if (i == 0 || (charArrayFromString[i] != 0 && charArrayFromString[i-1] == ' ')) {
+                charArrayFromString[i] = string.toUpperCase().charAt(i);
+            }
+            newString += charArrayFromString[i];
+        }
+        System.out.println(newString);
+    }
+}
