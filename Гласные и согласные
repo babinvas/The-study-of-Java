@@ -1,0 +1,54 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+/*
+JavaRush. Java Syntax. Уровень 8. Лекция 11. (0823)
+Гласные и согласные.
+Написать программу, которая вводит с клавиатуры строку текста.
+Программа должна вывести на экран две строки:
+1. первая строка содержит только гласные буквы из введённой строки.
+2. вторая - только согласные буквы и знаки препинания из введённой строки.
+Буквы соединять пробелом, каждая строка должна заканчиваться пробелом.
+*/
+
+public class Solution {
+    public static char[] vowels = new char[]{'а', 'я', 'у', 'ю', 'и', 'ы', 'э', 'е', 'о', 'ё'};
+
+    public static void main(String[] args) throws Exception {
+        //напишите тут ваш код
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String string = reader.readLine();
+        ArrayList<Character> vowelsFromString = new ArrayList<>();
+        ArrayList<Character> consonantFromString = new ArrayList<>();
+        for (int i = 0; i < string.length(); i++) {
+            char temp = string.charAt(i);
+            if (isVowel(temp)) {
+                vowelsFromString.add(temp);
+                vowelsFromString.add(' ');
+            }
+            else if (!isVowel(temp) && temp != ' ') {
+                consonantFromString.add(temp);
+                consonantFromString.add(' ');
+            }
+        }
+        for (int i = 0; i < vowelsFromString.size()-1; i++) {
+            System.out.print(vowelsFromString.get(i));
+        }
+        System.out.println();
+        for (int i = 0; i < consonantFromString.size()-1; i++) {
+            System.out.print(consonantFromString.get(i));
+        }
+    }
+
+    // метод проверяет, гласная ли буква
+    public static boolean isVowel(char c) {
+        c = Character.toLowerCase(c);  // приводим символ в нижний регистр - от заглавных к строчным буквам
+        for (char d : vowels) {  // ищем среди массива гласных
+            if (c == d) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
