@@ -1,0 +1,98 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+JavaRush. Java Syntax. Уровень 8. Лекция 11. (1419)
+Нашествие исключений
+Заполни список exceptions десятью(10) различными исключениями.
+Первое исключение уже реализовано в методе initExceptions.
+*/
+
+public class Solution {
+    public static List<Exception> exceptions = new ArrayList<Exception>();
+
+    public static void main(String[] args) {
+        initExceptions();
+
+        for (Exception exception : exceptions) {
+            System.out.println(exception);
+        }
+    }
+
+    private static void initExceptions() {   //the first exception
+        try {
+            float i = 1 / 0;
+
+        } catch (ArithmeticException e) {
+            exceptions.add(e);
+        }
+
+        //напишите тут ваш код
+        try {
+            throw new IOException();
+        }
+        catch (IOException e) {
+            exceptions.add(e);
+         }
+
+        try {
+            String s = null;
+            s.length();
+        }
+        catch (NullPointerException e) {
+            exceptions.add(e);
+        }
+
+        try {
+            int[] vas2 = new int[1];
+            vas2[1] = 3;
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            exceptions.add(e);
+        }
+
+        try {
+            FileInputStream file = new FileInputStream("");
+        }
+        catch (FileNotFoundException e) {
+            exceptions.add(e);
+        }
+
+        try {
+            String a = "n";
+            int i = Integer.parseInt(a);
+        }
+        catch (NumberFormatException e) {
+            exceptions.add(e);
+        }
+
+        try {
+            throw new ClassCastException();
+        }
+        catch (ClassCastException e) {
+            exceptions.add(e);
+        }
+
+        try {
+            throw new ArrayStoreException();
+        }
+        catch (ArrayStoreException e) {
+            exceptions.add(e);
+        }
+
+        try {
+            throw new IllegalArgumentException ();
+        }
+        catch (IllegalArgumentException  e) {
+            exceptions.add(e);
+        }
+
+        try {
+            throw new StringIndexOutOfBoundsException();
+        }
+        catch (StringIndexOutOfBoundsException e) {
+            exceptions.add(e);
+        }
+    }
+}
