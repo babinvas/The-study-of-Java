@@ -1,0 +1,4 @@
+public class Helicopter implements CanFly {                                                                                                                                                                                                                                                                                                                                                                                                                
+    public void fly() {
+    }                                                                                                                                                                                                                                                                                                                                                                                                              
+}
