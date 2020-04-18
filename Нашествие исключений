@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-JavaRush. Java Syntax. Уровень 8. Лекция 11. (1419)
+JavaRush. Java Core. Уровень 14. Лекция 8. (1419)
 Нашествие исключений
 Заполни список exceptions десятью(10) различными исключениями.
 Первое исключение уже реализовано в методе initExceptions.
