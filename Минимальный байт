@@ -1,0 +1,35 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 3. (1802)
+
+Минимальный байт.
+
+Ввести с консоли имя файла.
+Найти минимальный байт в файле, вывести его на экран.
+Закрыть поток ввода-вывода.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String file = reader.readLine();
+        FileInputStream inputStreamFile = new FileInputStream(file);
+
+        int min = 0;
+
+        while (inputStreamFile.available() > 0) {
+            int data = inputStreamFile.read();
+
+            if (min > data || min == 0) {
+                min = data;
+            }
+        }
+
+        System.out.println(min);
+        reader.close();
+        inputStreamFile.close();
+    }
+}
