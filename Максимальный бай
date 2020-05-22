@@ -1,0 +1,35 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 3. (1801)
+
+Максимальный байт.
+
+Ввести с консоли имя файла.
+Найти максимальный байт в файле, вывести его на экран.
+Закрыть поток ввода-вывода.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String fileName = reader.readLine();
+        FileInputStream fileStream = new FileInputStream(fileName);
+
+        int maxByte = 0;
+        while (fileStream.available() > 0) {
+            int data = fileStream.read();
+
+            if(maxByte < data) {
+                maxByte = data;
+            }
+        }
+
+        System.out.println(maxByte);
+        reader.close();
+        fileStream.close();
+    }
+}
