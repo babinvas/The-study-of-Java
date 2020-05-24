@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.util.Map;
+import java.util.HashMap;
+
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 3. (1803)
+
+Самые частые байты.
+
+Ввести с консоли имя файла.
+Найти байт или байты с максимальным количеством повторов.
+Вывести их на экран через пробел.
+Закрыть поток ввода-вывода.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Map<Integer, Integer> byteAndRepeats = new HashMap<Integer, Integer>();
+
+        String fileName = reader.readLine();
+        FileInputStream fileStream = new FileInputStream(fileName);
+
+        int data = 0;
+
+        while (fileStream.available() > 0) {
+            data = fileStream.read();
+
+            if (byteAndRepeats.containsKey(data)) {
+                int currentCount = byteAndRepeats.get(data);
+                byteAndRepeats.put(data, ++currentCount);
+            }
+            else {
+                byteAndRepeats.put(data, 1);
+            }
+        }
+
+        fileStream.close();
+
+        int max = byteAndRepeats.get(data);
+
+        for (Map.Entry<Integer, Integer> byteData : byteAndRepeats.entrySet()) {
+            if (max < byteData.getValue()){
+                max = byteData.getValue();
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> byteData : byteAndRepeats.entrySet()) {
+            if (max == byteData.getValue()) {
+                System.out.print(byteData.getKey() + " ");
+            }
+        }
+    }
+}
