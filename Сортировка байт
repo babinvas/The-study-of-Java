@@ -1,0 +1,58 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.util.List;
+import java.util.ArrayList;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 3. (1805)
+
+Сортировка байт.
+
+Ввести с консоли имя файла.
+Считать все байты из файла.
+Не учитывая повторений - отсортировать их по байт-коду в возрастающем порядке.
+Вывести на экран.
+Закрыть поток ввода-вывода.
+
+Пример байт входного файла:
+44 83 44
+
+Пример вывода:
+44 83
+*/
+
+public class Solution {
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        List<Integer> byteAndRepeats = new ArrayList<>();
+
+        String fileName = reader.readLine();
+        FileInputStream fileStream = new FileInputStream(fileName);
+
+        while (fileStream.available() > 0) {
+            int data = fileStream.read();
+            byteAndRepeats.add(data);
+        }
+
+        fileStream.close();
+
+        for (int i = 0; i < byteAndRepeats.size() - 1; i++) {
+            for (int j = 1; j < byteAndRepeats.size() - i; j++) {
+                if (byteAndRepeats.get(j - 1) > byteAndRepeats.get(j)) {
+                    int helper = byteAndRepeats.get(j);
+                    byteAndRepeats.set(j, byteAndRepeats.get(j - 1));
+                    byteAndRepeats.set(j - 1, helper);
+                }
+            }
+        }
+
+        for (int i = 0; i < byteAndRepeats.size(); i++) {
+            if (i == 0) {
+                System.out.print(byteAndRepeats.get(0) + " ");
+            } else if (byteAndRepeats.get(i - 1) != byteAndRepeats.get(i)) {
+                System.out.print(byteAndRepeats.get(i) + " ");
+            }
+        }
+    }
+}
