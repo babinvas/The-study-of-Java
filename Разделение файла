@@ -1,0 +1,42 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 5. (1808)
+
+Разделение файла.
+
+Считать с консоли три имени файла: файл1, файл2, файл3.
+Разделить файл1 по следующему критерию:
+Первую половину байт записать в файл2, вторую половину байт записать в файл3.
+Если в файл1 количество байт нечетное, то файл2 должен содержать большую часть.
+Закрыть потоки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        FileInputStream inputStream = new FileInputStream(reader.readLine());
+        FileOutputStream otputStream1 = new FileOutputStream(reader.readLine());
+        FileOutputStream otputStream2 = new FileOutputStream(reader.readLine());
+
+        byte[] buffer = new byte[inputStream.available()];
+        int sizeFilesReader = inputStream.read(buffer);
+        int sizeFilesFirsHalf = sizeFilesReader - (sizeFilesReader / 2);
+
+        System.out.println(sizeFilesReader);
+        System.out.println(sizeFilesFirsHalf);
+        System.out.println(sizeFilesReader - sizeFilesFirsHalf);
+
+        otputStream1.write(buffer, 0, sizeFilesFirsHalf);
+        otputStream2.write(buffer, sizeFilesFirsHalf, sizeFilesReader - sizeFilesFirsHalf);
+
+        inputStream.close();
+        otputStream1.close();
+        otputStream2.close();
+    }
+}
