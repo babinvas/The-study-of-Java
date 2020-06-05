@@ -1,0 +1,41 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 8. (1817)
+
+Пробелы.
+
+В метод main первым параметром приходит имя файла.
+Вывести на экран соотношение количества пробелов к количеству всех символов. Например, 10.45.
+1. Посчитать количество всех символов.
+2. Посчитать количество пробелов.
+3. Вывести на экран п2/п1*100, округлив до 2 знаков после запятой.
+4. Закрыть потоки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        String fileName = args[0];
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+
+        int sumOfLetters = 0;
+        int sumOfSpace = 0;
+
+        while (fileInputStream.available() > 0) {
+            byte[] buffer = new byte[1000];
+            int count = fileInputStream.read(buffer);
+
+            for (int i = 0; i < count; i++) {
+                sumOfLetters++;
+                if (buffer[i] == 32) {
+                    sumOfSpace++;
+                }
+            }
+        }
+
+        fileInputStream.close();
+        System.out.printf("%.2f", (float) (sumOfSpace * 1.0 /sumOfLetters) * 100);
+    }
+}
