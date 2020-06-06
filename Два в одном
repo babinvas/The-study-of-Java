@@ -1,0 +1,48 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 8. (1818)
+
+Два в одном.
+
+Считать с консоли 3 имени файла.
+Записать в первый файл содержимого второго файла, а потом дописать в первый файл содержимое третьего файла.
+Закрыть потоки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        FileOutputStream fileOutStream;
+        FileInputStream fileInputStream;
+
+        String NameOfFileOutStream = reader.readLine();
+
+        for (int i = 0; i < 2; i++) {
+            if (i == 0) {
+                fileOutStream = new FileOutputStream(NameOfFileOutStream, false);
+            } else {
+                fileOutStream = new FileOutputStream(NameOfFileOutStream, true);
+            }
+
+            fileInputStream = new FileInputStream(reader.readLine());
+            byte[] buffer = new byte[1000];
+
+            while (fileInputStream.available() > 0) {
+                    int count = fileInputStream.read(buffer);
+                    fileOutStream.write(buffer, 0, count);
+            }
+
+            fileOutStream.close();
+            fileInputStream.close();
+        }
+
+        reader.close();
+    }
+}
