@@ -1,0 +1,51 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 8. (1819)
+
+Объединение файлов.
+
+Считать с консоли 2 имени файла.
+В начало первого файла записать содержимое второго файла так, чтобы получилось объединение файлов.
+Закрыть потоки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String NameOfFileOutStream = reader.readLine();
+        String NameOfFileInputStream = reader.readLine();
+
+        reader.close();
+
+        FileInputStream fileInputStream;
+        FileOutputStream fileOutStream;
+
+        fileInputStream = new  FileInputStream(NameOfFileOutStream);
+        byte[] buffer1 = new byte[fileInputStream.available()];
+
+        int count1 = 0;
+
+        if (fileInputStream.available() > 0) {
+            count1 = fileInputStream.read(buffer1);
+        }
+
+        fileInputStream.close();
+
+        fileOutStream = new FileOutputStream(NameOfFileOutStream);
+        fileInputStream = new FileInputStream(NameOfFileInputStream);
+
+        byte[] buffer2 = new byte[fileInputStream.available()];
+
+        if (fileInputStream.available() > 0) {
+            int count2 = fileInputStream.read(buffer2);
+            fileOutStream.write(buffer2, 0, count2);
+        }
+
+        fileOutStream.write(buffer1, 0, count1);
+
+        fileOutStream.close();
+        fileInputStream.close();
+    }
+}
