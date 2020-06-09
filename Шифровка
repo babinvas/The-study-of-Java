@@ -1,0 +1,46 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 8. (1826)
+
+Шифровка.
+
+Придумать механизм шифровки/дешифровки.
+
+Программа запускается с одним из следующих наборов параметров:
+-e fileName fileOutputName
+-d fileName fileOutputName
+
+где:
+fileName - имя файла, который необходимо зашифровать/расшифровать.
+fileOutputName - имя файла, куда необходимо записать результат шифрования/дешифрования.
+-e - ключ указывает, что необходимо зашифровать данные.
+-d - ключ указывает, что необходимо расшифровать данные.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(args[2]);
+
+        FileInputStream fileInputStream = new FileInputStream(args[1]);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+
+        int i;
+
+        if (args[0].equals("-e")) {
+           while ((i = bufferedInputStream.read()) != -1) {
+               int coder = 255 - i;
+               fileOutputStream.write(coder);
+           }
+        }
+        else if (args[0].equals("-d")) {
+           while ((i = bufferedInputStream.read()) != -1) {
+               int coder = 255 - i;
+               fileOutputStream.write(coder);
+           }
+        }
+
+        fileInputStream.close();
+        fileOutputStream.close();
+    }
+}
