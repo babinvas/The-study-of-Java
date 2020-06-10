@@ -1,0 +1,45 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 8. (1821)
+
+Встречаемость символов.
+
+Программа запускается с одним параметром - именем файла, который содержит английский текст.
+Посчитать частоту встречания каждого символа.
+Отсортировать результат по возрастанию кода ASCII (почитать в инете).
+
+Пример:
+','=44, 's'=115, 't'=116.
+
+Вывести на консоль отсортированный результат:
+[символ1] частота1
+[символ2] частота2
+Закрыть потоки.
+
+Пример вывода:
+, 19
+- 7
+f 361
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(args[0]);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+
+        int[] sumOfLettersAscii = new int[256];
+        int byteOfLetterAscii;
+        while ((byteOfLetterAscii = bufferedInputStream.read()) != -1) {
+            sumOfLettersAscii[byteOfLetterAscii]++;
+        }
+
+        for (int i = 0; i < 256; i++) {
+            if (sumOfLettersAscii[i] != 0) {
+                System.out.println((char) i + " " + sumOfLettersAscii[i]);
+            }
+        }
+
+        fileInputStream.close();
+    }
+}
