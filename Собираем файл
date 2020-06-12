@@ -1,0 +1,81 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 8. (1825)
+
+Собираем файл.
+
+Собираем файл из кусочков.
+Считывать с консоли имена файлов.
+Каждый файл имеет имя: [someName].partN.
+
+Например, Lion.avi.part1, Lion.avi.part2, ..., Lion.avi.part37.
+
+Имена файлов подаются в произвольном порядке. Ввод заканчивается словом "end".
+В папке, где находятся все прочтенные файлы, создать файл без суффикса [.partN].
+
+Например, Lion.avi.
+
+В него переписать все байты из файлов-частей используя буфер.
+Файлы переписывать в строгой последовательности, сначала первую часть, потом вторую, ..., в конце - последнюю.
+Закрыть потоки.
+*/
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException {
+        List<String> fileNames = new ArrayList<>();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName;
+
+        while (!((fileName = reader.readLine()).equals("end"))) {
+            fileNames.add(fileName);
+        }
+
+        reader.close();
+
+        for (int j = 0; j < fileNames.size(); j++) {
+            for (int i = 0; i < fileNames.size() - j - 1; i++) {
+                int numberOfFilePart1 = getNumberOfFilePart(fileNames.get(i));
+                int numberOfFilePart2 = getNumberOfFilePart(fileNames.get(i + 1));
+
+                if (numberOfFilePart1 > numberOfFilePart2) {
+                    String helper = fileNames.get(i + 1);
+                    fileNames.set(i + 1, fileNames.get(i));
+                    fileNames.set(i, helper);
+                }
+            }
+        }
+
+        int indexPart = fileNames.get(0).lastIndexOf("part");
+        String fullFileName = fileNames.get(0).substring(0, indexPart - 1);
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fullFileName));
+
+        BufferedInputStream bufferedInputStream;
+
+        for (String filePart : fileNames) {
+            bufferedInputStream = new BufferedInputStream(new FileInputStream(filePart));
+
+            int buffer;
+
+            while ((buffer = bufferedInputStream.read()) != -1) {
+                bufferedOutputStream.write(buffer);
+            }
+
+            bufferedInputStream.close();
+        }
+
+        bufferedOutputStream.close();
+    }
+
+    public static int getNumberOfFilePart(String filePartName) {
+        int lengthFileNames = filePartName.length();
+        int indexPart = filePartName.lastIndexOf("part");
+        String filePart = filePartName.substring(indexPart + 4, lengthFileNames);
+
+        return Integer.parseInt(filePart);
+    }
+}
