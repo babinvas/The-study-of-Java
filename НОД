@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+/*
+JavaRush. Java Core. Уровень 14. Лекция 8. (1420)
+
+НОД.
+
+Наибольший общий делитель (НОД).
+Ввести с клавиатуры 2 целых положительных числа.
+Вывести в консоль наибольший общий делитель.
+*/
+
+public class Solution {
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String stringNumber1 = reader.readLine();
+        String stringNumber2 = reader.readLine();
+
+        int number1;
+        int number2;
+        int nod;
+
+        if ((number1 = Integer.parseInt(stringNumber1)) <= 0 || (number2 = Integer.parseInt(stringNumber2)) <= 0) {
+            throw new Exception();
+        }
+        else if (number1 > number2) {
+            int helper = number1;
+            number1 = number2;
+            number2 = helper;
+        }
+
+        for (int i = number1; i > 0; i--) {
+            if (number2 % i == 0 && number1 % i == 0) {
+                nod = i;
+                System.out.println(nod);
+                break;
+            }
+        }
+    }
+}
