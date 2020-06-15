@@ -1,0 +1,72 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 18. Лекция 11. (1820)
+
+Округление чисел.
+
+Считать с консоли 2 имени файла.
+Первый файл содержит вещественные(дробные) числа, разделенные пробелом. Например, 3.1415.
+Округлить числа до целых и записать через пробел во второй файл.
+Закрыть потоки.
+
+Принцип округления:
+3.49 => 3
+3.50 => 4
+3.51 => 4
+-3.49 => -3
+-3.50 => -3
+-3.51 => -4
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String NameOfFileInputStream = reader.readLine();
+        String NameOfFileOutStream = reader.readLine();
+
+        reader.close();
+
+        FileInputStream fileInputStream = new FileInputStream(NameOfFileInputStream);
+        FileOutputStream fileOutStream = new FileOutputStream(NameOfFileOutStream);
+
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+
+        String numberInString = "";
+        int buffer;
+
+        while (true) {
+            buffer = bufferedInputStream.read();
+
+            if (buffer == 32 || buffer == -1) {
+                int roundedNumber;
+
+                if (numberInString.contains(".")) {
+                    double number = Double.parseDouble(numberInString);
+                    roundedNumber = (int) Math.round(number);
+                }
+                else {
+                    roundedNumber = Integer.parseInt(numberInString);
+                }
+
+                String intIntoString = "" + roundedNumber;
+                byte[] stringIntoBytes = intIntoString.getBytes();
+
+                fileOutStream.write(stringIntoBytes);
+                fileOutStream.write((byte) ' ');
+                numberInString = "";
+
+                if (buffer == -1) {
+                    break;
+                }
+            }
+            else {
+                numberInString = numberInString + (char) buffer;
+            }
+        }
+
+        fileInputStream.close();
+        fileOutStream.close();
+    }
+}
