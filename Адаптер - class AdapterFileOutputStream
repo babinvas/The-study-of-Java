@@ -1,0 +1,35 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 3. (1902)
+
+Адаптер.
+
+Используй класс AdapterFileOutputStream, чтобы адаптировать FileOutputStream к новому интерфейсу AmigoStringWriter.
+*/
+
+public class AdapterFileOutputStream implements AmigoStringWriter {
+    private FileOutputStream fileOutputStream;
+
+    public AdapterFileOutputStream(FileOutputStream fileOutputStream) {
+        this.fileOutputStream = fileOutputStream;
+    }
+
+    public void flush() throws IOException {
+        this.fileOutputStream.flush();
+    }
+
+    public void writeString(String s) throws IOException {
+        byte[] bytesFromString = s.getBytes();
+        this.fileOutputStream.write(bytesFromString);
+    }
+
+    public void close() throws IOException {
+        this.fileOutputStream.close();
+    }
+
+    public static void main(String[] args) {
+
+    }
+}
