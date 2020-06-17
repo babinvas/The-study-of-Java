@@ -1,0 +1,32 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 13. Лекция 11. (1319)
+
+Писатель в файл с консоли.
+
+1. Прочесть с консоли имя файла.
+2. Считывать строки с консоли, пока пользователь не введет строку "exit".
+3. Вывести абсолютно все введенные строки в файл, каждую строчку с новой строки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String fileName = reader.readLine();
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+
+        while (true) {
+            String lineReader = reader.readLine();
+            writer.write(lineReader + "\n");
+
+            if (lineReader.equals("exit")) {
+                break;
+            }
+        }
+
+        reader.close();
+        writer.close();
+    }
+}
