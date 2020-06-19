@@ -1,0 +1,35 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 15. Лекция 12. (1525)
+
+Файл в статическом блоке.
+
+1. Инициализируй переменную Statics.FILE_NAME полным путем к файлу с данными, который содержит несколько строк.
+2. В статическом блоке считай из файла с именем Statics.FILE_NAME все строки и добавь их по отдельности в List lines.
+*/
+
+public class Solution {
+    public static List<String> lines = new ArrayList<String>();
+
+    static {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(Statics.FILE_NAME));
+            String data;
+
+            while ((data = reader.readLine()) != null) {
+                lines.add(data);
+            }
+
+            reader.close();
+        }
+        catch (IOException e) {
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(lines);
+    }
+}
