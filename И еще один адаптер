@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.Date;
+import java.util.Scanner;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 3. (1904)
+
+И еще один адаптер.
+
+Адаптировать Scanner к PersonScanner.
+Классом-адаптером является PersonScannerAdapter.
+В классе адаптере создать приватное финальное поле Scanner fileScanner. Поле инициализировать в конструкторе с одним аргументом типа Scanner.
+
+Данные в файле хранятся в следующем виде:
+Иванов Иван Иванович 31 12 1950
+Петров Петр Петрович 31 12 1957
+
+В файле хранится большое количество людей, данные одного человека находятся в одной строке. Метод read() должен читать данные только одного человека.
+*/
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+    }
+
+    public static class PersonScannerAdapter implements PersonScanner {
+        private Scanner fileScanner;
+
+        public PersonScannerAdapter(Scanner fileScanner) {
+            this.fileScanner = fileScanner;
+        }
+
+        public Person read() throws IOException {
+            String person = this.fileScanner.nextLine();
+
+            //Иванов Иван Иванович 31 12 1950
+            String[] dataPartOfPerson = person.split(" ");
+
+            int date = Integer.parseInt(dataPartOfPerson[3]);
+            int month = Integer.parseInt(dataPartOfPerson[4]);
+            int year = Integer.parseInt(dataPartOfPerson[5]);
+
+            Date birthDate = new Date(year - 1900, month - 1, date);
+
+            //Person(String firstName, String middleName, String lastName, Date birthDate)
+            return new Person(dataPartOfPerson[1], dataPartOfPerson[2], dataPartOfPerson[0], birthDate);
+        }
+
+        public void close() throws IOException {
+            this.fileScanner.close();
+        }
+    }
+}
