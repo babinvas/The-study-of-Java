@@ -1,0 +1,55 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 5. (1907)
+
+Считаем слово.
+
+Считать с консоли 2 имени файла.
+Вывести во второй файл все символы с четным порядковым номером (нумерация начинается с 1).
+
+Пример первого файла:
+text in file
+Вывод во втором файле:
+eti ie
+Закрыть потоки ввода-вывод
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String fileName = reader.readLine();
+
+        reader.close();
+
+        FileReader fileReader = new FileReader(fileName);
+
+        String symbols = " .!?,:;-'()-_—[]@{}*<>&#~/\n\\\"";
+        String word = "";
+        int count = 0;
+
+        while (fileReader.ready()) {
+            int data = fileReader.read();
+            char charData = (char) data;
+
+            if (symbols.indexOf(charData) != -1 && word.equals("world")) {
+                count++;
+                word = "";
+            }
+            else if (symbols.indexOf(charData) != -1 && !word.equals("world")) {
+                word = "";
+            }
+            else {
+                word = word + charData;
+            }
+        }
+
+        if (word.equals("world")) {
+            count++;
+        }
+
+        fileReader.close();
+        System.out.println(count);
+    }
+}
