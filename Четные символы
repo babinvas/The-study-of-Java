@@ -1,0 +1,43 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 5. (1906)
+
+Четные символы.
+
+Считать с консоли 2 имени файла.
+Вывести во второй файл все символы с четным порядковым номером (нумерация начинается с 1).
+
+Пример первого файла:
+text in file
+Вывод во втором файле:
+eti ie
+Закрыть потоки ввода-вывод
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
+
+        reader.close();
+
+        FileReader file1 = new FileReader(fileName1);
+        FileWriter file2 = new FileWriter(fileName2);
+
+        int count = 0;
+        while (file1.ready()) {
+            int data = file1.read();
+            count++;
+
+            if(count % 2 == 0) {
+                file2.write(data);
+            }
+        }
+
+        file1.close();
+        file2.close();
+    }
+}
