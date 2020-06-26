@@ -1,0 +1,41 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 5. (1909)
+
+Замена знаков.
+
+Считать с консоли 2 имени файла.
+Первый Файл содержит текст.
+Считать содержимое первого файла и заменить все точки "." на знак "!".
+Результат вывести во второй файл.
+Закрыть потоки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
+
+        reader.close();
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName1));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName2));
+
+        while (bufferedReader.ready()) {
+            int data = bufferedReader.read();
+            char charData = (char) data;
+
+            if (charData == '.') {
+                charData = '!';
+            }
+
+            bufferedWriter.write(charData);
+        }
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
