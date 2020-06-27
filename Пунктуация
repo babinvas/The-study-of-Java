@@ -1,0 +1,43 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 5. (1910)
+
+Пунктуация.
+
+Считать с консоли 2 имени файла.
+Первый Файл содержит текст.
+Считать содержимое первого файла, удалить все знаки пунктуации, включая символы новой строки.
+
+Результат вывести во второй файл.
+
+Закрыть потоки.
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader;
+
+        reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
+        reader.close();
+
+        reader = new BufferedReader(new FileReader(fileName1));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName2));
+
+        String symbols = ".!?,:;-'()-_—[]@{}*<>&#~/\n\\\"";
+
+        while (reader.ready()) {
+            int data = reader.read();
+            char charData = (char) data;
+
+            if (symbols.indexOf(charData) == -1) {
+                writer.write(data);
+            }
+        }
+
+        reader.close();
+        writer.close();
+    }
+}
