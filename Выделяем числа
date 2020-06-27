@@ -1,0 +1,50 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 5. (1908)
+
+Выделяем числа.
+
+Считать с консоли 2 имени файла.
+Вывести во второй файл все числа, которые есть в первом файле.
+Числа выводить через пробел.
+Закрыть потоки.
+
+Пример тела файла:
+12 text var2 14 8ю 1
+
+Результат:
+12 14 1
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader;
+
+        reader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName1 = reader.readLine();
+        String fileName2 = reader.readLine();
+        reader.close();
+
+        reader = new BufferedReader(new FileReader(fileName1));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName2));
+
+        while (reader.ready()) {
+            String line = reader.readLine();
+            line.trim();
+
+            String[] lineArray = line.split(" ");
+            for (String lineElement: lineArray) {
+                try {
+                    int intNumber = Integer.parseInt(lineElement);
+                    writer.write(lineElement + " ");
+                }
+                catch (Exception e) {
+                }
+            }
+        }
+
+        reader.close();
+        writer.close();
+    }
+}
