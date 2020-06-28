@@ -1,0 +1,41 @@
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 8. (1911)
+
+Ридер обертка.
+
+В методе main подмени объект System.out написанной тобой ридер-оберткой по аналогии с лекцией.
+Твоя ридер-обертка должна преобразовывать весь текст в заглавные буквы.
+Вызови готовый метод printSomething(), воспользуйся testString.
+Верни переменной System.out первоначальный поток.
+Выведи модифицированную строку в консоль.
+*/
+
+public class Solution {
+    public static TestString testString = new TestString();
+
+    public static void main(String[] args) {
+        PrintStream consoleOut = System.out;
+
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outStream);
+
+        System.setOut(printStream);
+        testString.printSomething();
+
+        String allLettersToUpperCase = outStream.toString();
+        allLettersToUpperCase = allLettersToUpperCase.toUpperCase();
+
+        System.setOut(consoleOut);
+
+        System.out.println(allLettersToUpperCase);
+    }
+
+    public static class TestString {
+        public void printSomething() {
+            System.out.println("it's a text for testing");
+        }
+    }
+}
