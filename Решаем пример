@@ -1,0 +1,73 @@
+import java.io.PrintStream;
+import java.io.ByteArrayOutputStream;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 8. (1914)
+
+Решаем пример.
+
+В методе main подмени объект System.out написанной тобой ридер-оберткой по аналогии с лекцией.
+Твоя ридер-обертка должна выводить на консоль решенный пример.
+Вызови готовый метод printSomething(), воспользуйтесь testString.
+Верни переменной System.out первоначальный поток.
+
+Возможные операции: + - *
+Шаблон входных данных и вывода: a [знак] b = c
+Отрицательных и дробных чисел, унарных операторов - нет.
+
+Пример вывода:
+3 + 6 = 9
+*/
+
+public class Solution {
+    public static TestString testString = new TestString();
+
+    public static void main(String[] args) {
+        PrintStream consoleOut = System.out;
+
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        PrintStream byteOut = new PrintStream(outStream);
+        System.setOut(byteOut);
+
+        testString.printSomething();
+
+        System.setOut(consoleOut);
+
+        String expression = outStream.toString();
+        expression = expression.trim();
+        String[] arrayFromGottenExpression = expression.split(" ");
+
+        int resultOfExpression = Integer.parseInt(arrayFromGottenExpression[0]);
+
+        for (int i = 1; i < arrayFromGottenExpression.length - 1; i+=2) {
+
+            if (arrayFromGottenExpression[i].equals("=")) {
+                break;
+            }
+
+            int number = Integer.parseInt(arrayFromGottenExpression[i + 1]);
+
+            if (arrayFromGottenExpression[i].equals("+")) {
+                resultOfExpression = resultOfExpression + number;
+            }
+            else if (arrayFromGottenExpression[i].equals("-")) {
+                resultOfExpression = resultOfExpression - number;
+            }
+            else if (arrayFromGottenExpression[i].equals("*")) {
+                resultOfExpression = resultOfExpression * number;
+            }
+        }
+
+        for (String arrayMember : arrayFromGottenExpression) {
+            System.out.print(arrayMember + " ");
+        }
+
+        System.out.print(resultOfExpression);
+    }
+
+    public static class TestString {
+        public void printSomething() {
+            System.out.println("3 + 6 = ");
+        }
+    }
+}
