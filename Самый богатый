@@ -1,0 +1,66 @@
+import java.io.*;
+import java.util.Map;
+import java.util.TreeMap;
+
+/*
+JavaRush. Java Core. Уровень 19. Лекция 11. (1920)
+
+Самый богатый.
+
+В метод main первым параметром приходит имя файла.
+В этом файле каждая строка имеет следующий вид:
+имя значение
+где [имя] - String, [значение] - double. [имя] и [значение] разделены пробелом.
+
+Для каждого имени посчитать сумму всех его значений.
+Вывести в консоль имена в алфавитном порядке, у которых максимальная сумма.
+Имена разделять пробелом либо выводить с новой строки.
+Закрыть потоки.
+
+Пример входного файла:
+Петров 0.501
+Иванов 1.35
+Петров 0.85
+
+Пример вывода:
+Петров
+*/
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        FileReader fileReader = new FileReader(args[0]);
+        BufferedReader fileBufferedReader = new BufferedReader(fileReader);
+
+        Map<String, Double> fileData = new TreeMap<>();
+
+        String lineData;
+        double max = 0;
+
+        while ((lineData = fileBufferedReader.readLine()) != null) {
+            String[] bufData = lineData.split(" ");
+
+            String dataName = bufData[0];
+            double dataNumber = Double.parseDouble(bufData[1]);
+
+            if (fileData.containsKey(dataName)) {
+                dataNumber = fileData.get(dataName) + dataNumber;
+                fileData.put(dataName, dataNumber);
+            }
+            else {
+                fileData.put(bufData[0], dataNumber);
+            }
+
+            if (fileData.get(dataName) > max) {
+                max = fileData.get(dataName);
+            }
+        }
+
+        for (Map.Entry<String, Double> data : fileData.entrySet()) {
+            if (data.getValue() == max) {
+                System.out.println(data.getKey());
+            }
+        }
+
+        fileReader.close();
+    }
+}
