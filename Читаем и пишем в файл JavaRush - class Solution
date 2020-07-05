@@ -1,0 +1,183 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 20. Лекция 2. (2002)
+
+Читаем и пишем в файл: JavaRush.
+
+Реализуйте логику записи в файл и чтения из файла для класса JavaRush.
+Метод main реализован только для вас и не участвует в тестировании.
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        //you can find your_file_name.tmp in your TMP directory or adjust outputStream/inputStream according to your file's actual location
+        //вы можете найти your_file_name.tmp в папке TMP или исправьте outputStream/inputStream в соответствии с путем к вашему реальному файлу
+        try {
+            File yourFile = File.createTempFile("your_file_name", null, new File("F:"));
+            OutputStream outputStream = new FileOutputStream(yourFile);
+            InputStream inputStream = new FileInputStream(yourFile);
+
+            JavaRush javaRush = new JavaRush();
+
+            javaRush.users.add(new User());
+
+            //initialize users field for the javaRush object here - инициализируйте поле users для объекта javaRush тут
+            javaRush.save(outputStream);
+            outputStream.flush();
+
+            JavaRush loadedObject = new JavaRush();
+            loadedObject.load(inputStream);
+
+            //here check that the javaRush object is equal to the loadedObject object - проверьте тут, что javaRush и loadedObject равны
+            String comparison = javaRush.equals(loadedObject) ? "The classes are equals." : "The classes are not equals.";
+            System.out.println(comparison);
+
+            outputStream.close();
+            inputStream.close();
+
+        } catch (IOException e) {
+            //e.printStackTrace();
+            System.out.println("Oops, something is wrong with my file");
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.println("Oops, something is wrong with the save/load method");
+        }
+    }
+
+    public static class JavaRush {
+        public List<User> users = new ArrayList<>();
+
+        public void save(OutputStream outputStream) throws Exception {
+            //implement this method - реализуйте этот метод
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+            String isUsersPresent = (users == null || users.size() == 0) ? "no" : "yes";
+            writer.write(isUsersPresent + "\n");
+            writer.flush();
+
+            if (isUsersPresent.equals("yes")) {
+                for (User user : users) {
+                    String isItemPresent;
+
+                    isItemPresent = user.getFirstName() != null ? "yes" : "no";
+                    writer.write(isItemPresent + "\n");
+
+                    if (isItemPresent.equals("yes")) {
+                        writer.write(user.getFirstName() + "\n");
+                    }
+
+                    isItemPresent = user.getLastName() != null ? "yes" : "no";
+                    writer.write(isItemPresent + "\n");
+
+                    if (isItemPresent.equals("yes")) {
+                        writer.write(user.getLastName() + "\n");
+                    }
+
+                    isItemPresent = user.getBirthDate() != null ? "yes" : "no";
+                    writer.write(isItemPresent + "\n");
+
+                    if (isItemPresent.equals("yes")) {
+                        writer.write(user.getBirthDate().getTime() + "\n");
+                    }
+
+                    isItemPresent = user.isMale() == true ? "yes" : "no";
+
+                    if (isItemPresent.equals("yes")) {
+                        writer.write(isItemPresent + "\n");
+                    }
+                    else {
+                        writer.write(isItemPresent + "\n");
+                    }
+
+                    isItemPresent = user.getCountry() != null ? "yes" : "no";
+                    writer.write(isItemPresent + "\n");
+
+                    if (isItemPresent.equals("yes")) {
+                        writer.write(user.getCountry() + "\n");
+                    }
+
+                    writer.flush();
+                }
+            }
+        }
+
+        public void load(InputStream inputStream) throws Exception {
+            //implement this method - реализуйте этот метод
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String isUsersPresent = reader.readLine();
+
+            if (isUsersPresent.equals("no")) {
+                return;
+            }
+
+            while (reader.ready()) {
+                User user = new User();
+                users.add(user);
+
+                String isItemPresent;
+
+                isItemPresent = reader.readLine();
+
+                if (isItemPresent.equals("yes")) {
+                    user.setFirstName(reader.readLine());
+                }
+
+                isItemPresent = reader.readLine();
+
+                if (isItemPresent.equals("yes")) {
+                    user.setLastName(reader.readLine());
+                }
+
+                isItemPresent = reader.readLine();
+
+                if (isItemPresent.equals("yes")) {
+                    long date = Long.parseLong(reader.readLine());
+                    user.setBirthDate(new Date(date));
+                }
+
+                isItemPresent = reader.readLine();
+
+                if (isItemPresent.equals("yes")) {
+                    user.setMale(true);
+                }
+
+                isItemPresent = reader.readLine();
+
+                if (isItemPresent.equals("yes")) {
+                    String countryName = reader.readLine();
+
+                    if (countryName.equals("UKRAINE")) {
+                        user.setCountry(User.Country.UKRAINE);
+                    }
+                    else if (countryName.equals("RUSSIA")) {
+                        user.setCountry(User.Country.RUSSIA);
+                    }
+                    else if (countryName.equals("OTHER")) {
+                        user.setCountry(User.Country.OTHER);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            JavaRush javaRush = (JavaRush) o;
+
+            return users != null ? users.equals(javaRush.users) : javaRush.users == null;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return users != null ? users.hashCode() : 0;
+        }
+    }
+}
