@@ -1,0 +1,41 @@
+import java.io.*;
+
+/*
+JavaRush. Java Core. Уровень 20. Лекция 10. (2017)
+
+Десериализация
+
+На вход подается поток, в который записан сериализованный объект класса A либо класса B.
+Десериализуй объект в методе getOriginalObject так, чтобы в случае возникновения исключения было выведено сообщение на экран и возвращен null.
+Реализуй интерфейс Serializable где необходимо.
+*/
+
+public class Solution {
+    public A getOriginalObject(ObjectInputStream objectStream) {
+        try {
+            A aObject = (A) objectStream.readObject();
+            return aObject;
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println(e);
+            return null;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public class A {
+    }
+
+    public class B extends A implements Serializable {
+        public B() {
+            System.out.println("inside B");
+        }
+    }
+
+    public static void main(String[] args) {
+
+    }
+}
