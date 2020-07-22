@@ -1,0 +1,64 @@
+import java.util.HashSet;
+import java.util.Set;
+
+/*
+JavaRush. Java Core. Уровень 22. Лекция 5. (2104)
+
+Equals and HashCode
+
+В классе Solution исправить пару методов equals/hashCode в соответствии с правилами реализации этих методов(детали уточни у своего любимого поисковика).
+Обе строки first и last должны принимать участие в сравнении с помощью метода equals и вычислении hashcode.
+Метод main не участвует в тестировании.
+*/
+
+public class Solution {
+    private final String first, last;
+
+    public Solution(String first, String last) {
+        this.first = first;
+        this.last = last;
+    }
+
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Solution)) {
+            return false;
+        }
+
+        Solution that = (Solution) obj;
+
+        return (that.first == first || that.first.equals(first)) && (that.last == last || that.last.equals(last));
+    }
+
+    public int hashCode() {
+        int st1 = 0;
+        int st2 = 0;
+
+        if (first != null) {
+            st1 = first.hashCode();
+        }
+
+        if (last != null) {
+            st1 = last.hashCode();
+        }
+
+        return 31 * st1  + st2;
+    }
+
+    public static void main(String[] args) {
+        Set<Solution> s = new HashSet<>();
+        s.add(new Solution(null, null));
+        System.out.println(s.contains(new Solution("Donald", "Duck")));
+        System.out.println(s.contains(new Solution("Donald", null)));
+        System.out.println(s.contains(new Solution(null, "Duck")));
+        System.out.println(s.contains(new Solution(null, null)));
+    }
+}
