@@ -1,0 +1,54 @@
+import java.util.HashSet;
+import java.util.Set;
+
+/*
+JavaRush. Java Core. Уровень 22. Лекция 5. (2105)
+
+Исправить ошибку. Сравнение объектов
+
+Сравнение объектов Solution не работает должным образом. Найти ошибку и исправить.
+Метод main не участвует в тестировании.
+*/
+
+public class Solution {
+    private final String first, last;
+
+    public Solution(String first, String last) {
+        this.first = first;
+        this.last = last;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        if (obj == this)
+            return true;
+
+        if (!(obj instanceof Solution))
+            return false;
+
+        Solution that = (Solution) obj;
+
+        return (that.first == first|| that.first.equals(first)) && (that.last == last || that.last.equals(last));
+    }
+
+    public int hashCode() {
+        int s1 = 0;
+        int s2 = 0;
+
+        if (first != null)
+            s1 = first.length();
+
+        if (last != null)
+            s2 = last.length();
+
+        return s1 + s2;
+    }
+
+    public static void main(String[] args) {
+        Set<Solution> s = new HashSet<>();
+        s.add(new Solution("Mickey", "Mouse"));
+        System.out.println(s.contains(new Solution("Mickey", "Mouse")));
+    }
+}
