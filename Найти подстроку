@@ -1,0 +1,53 @@
+/*
+JavaRush. Java Multithreading. Уровень 23. Лекция 5 (2202)
+
+Найти подстроку
+
+Метод getPartOfString должен возвращать подстроку начиная с символа после 1-го пробела и до конца слова,
+которое следует после 4-го пробела.
+
+Пример:
+"JavaRush - лучший сервис обучения Java."
+
+Результат:
+"- лучший сервис обучения"
+
+Пример:
+"Амиго и Диего лучшие друзья!"
+
+Результат:
+"и Диего лучшие друзья!"
+
+На некорректные данные бросить исключение TooShortStringException (сделать исключением).
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(getPartOfString("JavaRush - лучший сервис обучения Java."));
+        System.out.println(getPartOfString("Амиго и Диего лучшие друзья!"));
+        System.out.println(getPartOfString("Амиго и Диего друзья!"));
+    }
+
+    public static String getPartOfString(String string) {
+        String[] wordsArray;
+
+        if (string == null || (wordsArray = string.split(" ")).length < 5) {
+            throw new TooShortStringException();
+        }
+
+        String askedSubstring = "";
+
+        for (int i = 1; i < 5; i++) {
+            askedSubstring += wordsArray[i];
+
+            if (i < 4) {
+                askedSubstring += " ";
+            }
+        }
+
+        return askedSubstring;
+    }
+
+    public static class TooShortStringException extends RuntimeException {
+    }
+}
