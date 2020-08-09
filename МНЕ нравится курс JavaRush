@@ -1,0 +1,26 @@
+/*
+JavaRush. Java Multithreading. Уровень 23. Лекция 7 (2205)
+
+МНЕ нравится курс JavaRush
+
+Исправить метод getFormattedString так, чтобы он возвращал строку с параметрами для форматирования.
+Параметры должны меняться местами.
+
+Должен быть вывод:
+МНЕ нравится курс JavaRush
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(String.format(getFormattedString(), "JavaRush", "курс", "мне", "нравится"));
+        //должен быть вывод
+        //"МНЕ нравится курс JavaRush"
+    }
+
+    public static String getFormattedString() {
+        //можно и так
+        //return "%3$S" + " %4$s %2$s %1$s";
+
+        return "%3$s".toUpperCase() + " %4$s %2$s %1$s";
+    }
+}
