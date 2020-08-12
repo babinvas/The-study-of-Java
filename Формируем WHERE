@@ -1,0 +1,55 @@
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/*
+JavaRush. Java Multithreading. Уровень 23. Лекция 9 (2208)
+
+Формируем WHERE
+
+Сформируй часть запроса WHERE используя StringBuilder.
+Если значение null, то параметр не должен попадать в запрос.
+
+Пример:
+{name=Ivanov, country=Ukraine, city=Kiev, age=null}
+
+Результат:
+name = 'Ivanov' and country = 'Ukraine' and city = 'Kiev'
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        Map<String, String> map = new LinkedHashMap<>();
+        Map<String, String> map2 = new LinkedHashMap<>();
+
+        map.put("name", "Ivanov");
+        map.put("country", "Ukraine");
+        map.put("city", null);
+        map.put("age", "32");
+
+        System.out.println(getQuery(map));
+        System.out.println(getQuery(map2));
+    }
+
+    public static String getQuery(Map<String, String> params) {
+        if (params == null) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (Map.Entry<String, String> param : params.entrySet()) {
+            String value = param.getValue();
+
+            if (value != null) {
+                sb.append(param.getKey()).append(" = '").append(value).append("' and ");
+            }
+        }
+
+        if (sb.length() > 5) {
+            sb.delete(sb.length() - 5, sb.length());
+            return sb.toString();
+        }
+
+        return sb.toString();
+    }
+}
