@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+/*
+JavaRush. Java Multithreading. Уровень 23. Лекция 13 (2210)
+
+StringTokenizer
+
+Используя StringTokenizer разделить query на части по разделителю delimiter.
+
+Пример
+getTokens("level22.lesson13.task01", ".")
+
+возвращает массив строк
+{"level22", "lesson13", "task01"}
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        String[] a = getTokens("level22.lesson13.task01", ".");
+
+        for (String i : a) {
+            System.out.println(i);
+        }
+    }
+
+    public static String[] getTokens(String query, String delimiter) {
+        StringTokenizer tokenizer = new StringTokenizer(query, delimiter);
+        List<String> list = new ArrayList<>();
+
+        while(tokenizer.hasMoreTokens()) {
+            list.add(tokenizer.nextToken());
+        }
+
+        String[] result = list.toArray(new String[0]);
+        return result;
+    }
+}
