@@ -1,0 +1,7 @@
+public class SelfInterfaceMarkerImpl implements SelfInterfaceMarker {
+    public void vas(int i) {
+    }
+
+    public void gorge(int i) {
+    }
+}
