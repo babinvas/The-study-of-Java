@@ -1,0 +1,17 @@
+import java.util.List;
+
+/**
+JavaRush. Java Multithreading. Уровень 25. Лекция 6 (2407)
+
+ * Реализация интерфейса используя локальный класс
+
+ В классе Cat реализуй логику метода toSayable, которая описана в джавадоке.
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        List<Pet> pet = Util.getPets();
+        List<Sayable> pets = Util.convertPetToSayable(pet);
+        Util.printDialog(pets);
+    }
+}
