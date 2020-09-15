@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ JavaRush. Java Multithreading. Уровень 26. Лекция 2 (2502)
+
+ * Машину на СТО не повезем!
+
+ Инициализируй поле wheels используя данные из loadWheelNamesFromDB.
+ Выкинь исключение в случае некорректных данных.
+
+ Подсказка: если что-то не то с колесами, то это не машина!
+ Сигнатуры не менять.
+ */
+
+public class Solution {
+    public static enum Wheel {
+        FRONT_LEFT,
+        FRONT_RIGHT,
+        BACK_LEFT,
+        BACK_RIGHT
+    }
+
+    public static class Car {
+        protected List<Wheel> wheels;
+
+        public Car() {
+            //init wheels here
+            Wheel[] wheelsArray = Wheel.values();
+            String[] wheelNames = loadWheelNamesFromDB();
+
+            if (wheelNames.length != wheelsArray.length) {
+                throw new IllegalArgumentException();
+            }
+
+            for (Wheel wheel : wheelsArray) {
+                String wheelName = wheel.toString();
+
+                int count = 0;
+
+                for (String CarWheel : wheelNames) {
+                    if (wheelName.equals(CarWheel)) {
+                        count++;
+                    }
+                }
+
+                if (count != 1) {
+                    throw new IllegalArgumentException();
+                }
+            }
+
+            wheels = new ArrayList<>();
+
+            for (String CarWheel : wheelNames) {
+                Wheel wheel = Wheel.valueOf(CarWheel);
+                wheels.add(wheel);
+            }
+        }
+
+        protected String[] loadWheelNamesFromDB() {
+            //this method returns mock data
+            return new String[]{"FRONT_LEFT", "FRONT_RIGHT", "BACK_LEFT", "BACK_RIGHT"};
+        }
+    }
+
+    public static void main(String[] args) {
+       System.out.println(new Solution.Car().wheels.toString());
+    }
+}
