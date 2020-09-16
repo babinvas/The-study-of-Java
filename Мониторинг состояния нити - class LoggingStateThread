@@ -1,0 +1,32 @@
+public class LoggingStateThread extends Thread {
+    Thread target;
+
+    public LoggingStateThread(Thread target) {
+        this.target = target;
+    }
+
+    public void run() {
+        String nameTarget = getTargetName(target);
+        System.out.println(nameTarget);
+
+        while (true) {
+            if(!getTargetName(target).equals(nameTarget)) {
+                nameTarget = getTargetName(target);
+
+                if(!getTargetName(target).equals("TERMINATED")) {
+                    System.out.println(getTargetName(target));
+                }
+                else {
+                    System.out.println(getTargetName(target));
+                    break;
+                }
+            }
+        }
+
+    }
+
+    private String getTargetName(Thread target) {
+        State targetEnum = target.getState();
+        return targetEnum.toString();
+    }
+}
