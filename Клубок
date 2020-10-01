@@ -1,0 +1,132 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+ JavaRush. Java Core. Уровень 16. Лекция 13 (1632)
+
+ * Клубок
+
+1. Создай 5 различных своих нитей c отличным от Thread типом:
+1.1. Нить 1 должна бесконечно выполняться;
+1.2. Нить 2 должна выводить "InterruptedException" при возникновении исключения InterruptedException;
+1.3. Нить 3 должна каждые полсекунды выводить "Ура";
+1.4. Нить 4 должна реализовать интерфейс Message, при вызове метода showWarning нить должна останавливаться;
+1.5. Нить 5 должна читать с консоли числа пока не введено слово "N", а потом вывести в консоль сумму введенных чисел.
+2. В статическом блоке добавь свои нити в List<Thread> threads в перечисленном порядке.
+3. Нити не должны стартовать автоматически.
+
+Подсказка:
+Нить 4 можно проверить методом isAlive()
+ */
+
+public class Solution implements Runnable {
+    public static List<Thread> threads = new ArrayList<>(5);
+    public static Solution solution = new Solution();
+    public static SolutionImpMessage solutionImpMessage = new SolutionImpMessage();
+
+    static {
+        for (int i = 0; i < 5; i++) {
+            if (i == 3) {
+                threads.add(solutionImpMessage);
+            }
+            else {
+                threads.add(new Thread(solution));
+            }
+         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+
+    }
+
+    @Override
+    public void run() {
+        if (threads == null || threads.size() == 0) {
+            return;
+        }
+
+        if (Thread.currentThread().equals(threads.get(0))) {
+            runThread1();
+        }
+        else if (Thread.currentThread().equals(threads.get(1))) {
+            runThread2();
+        }
+        else if (Thread.currentThread().equals(threads.get(2))) {
+            runThread3();
+        }
+        else if (Thread.currentThread().equals(threads.get(4))) {
+            runThread5();
+        }
+    }
+
+    private void runThread1() {
+        while (true) {
+        }
+    }
+
+    private void runThread2() {
+        while (true) {
+            try {
+                Thread.sleep(0);
+            } catch (InterruptedException e) {
+                System.out.println("InterruptedException");
+            }
+        }
+    }
+
+    private void runThread3() {
+        while (true) {
+            System.out.println("Ура");
+
+            try {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void runThread5() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int sum = 0;
+
+        while (true) {
+            try {
+                String line = reader.readLine();
+
+                if (line.equals("N")) {
+                    break;
+                }
+
+                int number = Integer.parseInt(line);
+                sum += number;
+            }
+            catch (Exception e) {
+            }
+        }
+
+        try {
+            reader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(sum);
+    }
+
+    public static class SolutionImpMessage extends Thread implements Message {
+        public void showWarning() {
+            this.interrupt();
+        }
+
+        public void run() {
+            while (!Thread.currentThread().isInterrupted()) {
+            }
+        }
+    }
+}
