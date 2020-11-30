@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /*
-JavaRush. Java Core. Уровень 22. Лекция 5. (2106)
+JavaRush. Java Multithreading. Уровень 22. Лекция 5. (2106)
 
 Ошибка в equals/hashCode
 
