@@ -10,7 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /*
-JavaRush. Java Core. Уровень 22. Лекция 10 (2110)
+JavaRush. Java Multithreading. Уровень 22. Лекция 10 (2110)
 
 Рефакторинг методов
 
